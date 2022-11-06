@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '42 5 * * *'
 
 jobs:
   test:
@@ -20,7 +22,7 @@ jobs:
     name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up perl
       uses: shogo82148/actions-setup-perl@v1
@@ -55,6 +57,9 @@ jobs:
          cat  /Users/runner/.cpanm/work/*/build.log
 
     - name: Run tests
+      env:
+        AUTHOR_TESTING: 1
+        RELEASE_TESTING: 1
       run: |
         perl Makefile.PL
         make
