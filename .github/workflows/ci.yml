@@ -1,4 +1,4 @@
-name: Perl
+name: CI
 
 on:
   push:
