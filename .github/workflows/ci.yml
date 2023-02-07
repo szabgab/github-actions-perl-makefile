@@ -28,7 +28,7 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
           perl-version: ${{ matrix.perl }}
-          distribution: ${{ ( startsWith( matrix.runner, 'windows-' ) && 'strawberry' ) || 'default' }}
+          distribution: ${{ ( matrix.runner == 'windows-latest' && 'strawberry' ) || 'default' }}
 
     - name: Show Perl Version
       run: |
@@ -40,7 +40,7 @@ jobs:
         cpanm --installdeps --notest .
 
     - name: Show Errors on Windows
-      if:  ${{ failure() && startsWith( matrix.runner, 'windows-')}}
+      if:  ${{ failure() && matrix.runner == 'windows-latest' }}
       run: |
          ls -l C:/Users/
          ls -l C:/Users/RUNNER~1/
